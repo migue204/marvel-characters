@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { CharactersModule } from './characters/characters.module.js';
+import { TeamsModule } from './teams/teams.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -27,6 +28,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
                 synchronize: false,
             }),
     CharactersModule,
+    TeamsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

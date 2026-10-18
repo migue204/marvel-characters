@@ -1,40 +1,48 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn,UpdateDateColumn, ManyToOne, JoinColumn} from 'typeorm';
+import type { Relation } from 'typeorm';
+import { Team } from '../../teams/entities/team.entity.js';
+
+// Deben coincidir EXACTAMENTE con el CHECK de la tabla (mayúsculas)
 export enum CharacterStatus {
-    ACTIVE = 'active',
-    INJURED = 'injured',
-    MISSING = 'missing',
-    RETIRED = 'retired',
+  ACTIVE = 'ACTIVE',
+  INJURED = 'INJURED',
+  MISSING = 'MISSING',
+  RETIRED = 'RETIRED',
 }
 
-@Entity("characters")
+@Entity('characters')
 export class Character {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    real_name: string;
+  @Column({ type: 'varchar', length: 100 })
+  real_name: string;
 
-    @Column({ unique: true })
-    alias: string;
+  @Column({ type: 'varchar', length: 100, unique: true })
+  alias: string;
 
-    @Column()
-    main_power: string;
+  @Column({ type: 'varchar', length: 150 })
+  main_power: string;
 
-    @Column()
-    power_level: number;
+  @Column({ type: 'int' })
+  power_level: number;
 
-    @Column()
-    status: CharacterStatus;
+  @Column({ type: 'varchar', length: 20, default: CharacterStatus.ACTIVE })
+  status: CharacterStatus;
 
-    @Column()
-    is_villain: boolean;
+  @Column({ type: 'boolean', default: false })
+  is_villain: boolean;
 
-    @Column()
-    team_id: number;
+  @Column({ type: 'int', nullable: true })
+  team_id: number | null;
 
-    @Column()
-    created_at: Date;
+  @ManyToOne(() => Team, (team) => team.characters, { nullable: true })
+  @JoinColumn({ name: 'team_id' })
+  team: Relation<Team> | null;
 
-    @Column()
-    updated_at: Date;
+  @CreateDateColumn({ type: 'timestamp' })
+  created_at: Date;
+
+  @UpdateDateColumn({ type: 'timestamp' })
+  updated_at: Date;
 }
