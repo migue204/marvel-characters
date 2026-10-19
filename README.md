@@ -31,3 +31,23 @@ docker compose down        # apagar (los datos se conservan)
 docker compose down -v     # apagar y BORRAR datos (al subir de nuevo se recargan los iniciales)
 docker exec -it marvel_db psql -U marvel -d marvel_db   # consola SQL
 ```
+
+## Ejecutar la API
+
+1. Levantar la base de datos (desde la raíz del repo):
+```bash
+   docker compose up -d
+```
+2. Instalar dependencias y arrancar la API:
+```bash
+   cd taller3
+   npm install
+   npm run start:dev
+```
+3. La API queda en **http://localhost:3000**
+
+## Documentación (Swagger)
+
+Todos los endpoints están documentados y se pueden probar en:
+
+**http://localhost:3000/api**
